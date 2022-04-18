@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="PT-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cartão do Chacota</title>
+    <style>
+      body {
+        background-color: rgba(50, 50, 50, 0.8);
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(15, 15, 15);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+      }
+
+      .conteiner {
+        background-color: rgba(255, 255, 255, 1);
+        padding: 1em;
+        border-radius: 10px;
+        width: 25em;
+        height: 15em;
+        box-shadow: 9px 12px 12px rgb(0, 00, 0);
+      }
+      img[alt='CA'] {
+        width: 70%;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .header {
+        height: 80%;
+        margin: 0;
+        padding: 0;
+      }
+      .box-img {
+        display: flex;
+        align-items: flex-end;
+        margin-left: 5.3em;
+      }
+    </style>
+  </head>
+  <body>
+    <br /><br /><br />
+    <div class="conteiner">
+      <div class="content">
+        <div class="header">
+          <div class="box-img">
+            <H1>COLOCAR O LOGO AQUI</H1>
+          </div>
+        </div>
+        <div class="footer">
+          <h1>NOME</h1>
+          <h4>Tel:(xx) xxxxx-xxxx</h4>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const card = document.querySelector('.conteiner')
+    card.addEventListener("mousemove", cardEffect);
+    card.addEventListener("mouseleave", cardBack);
+    card.addEventListener("mouseenter", cardEnter);
+
+    function cardEffect(event) {
+      const cardWidth = card.offsetWidth
+      const cardHeight = card.offsetHeight
+      const centerX = card.offsetLeft + cardWidth / 2
+      const centerY = card.offsetTop + cardHeight / 2
+      const positionX = event.clientX - centerX
+      const positionY = event.clientY - centerY
+
+      const rotateX = ((+1 * 25 * positionY) / (cardHeight / 2)).toFixed(2)
+      const rotateY = ((-1 * 25 * positionX) / (cardWidth / 2)).toFixed(2)
+
+      console.log(rotateX, rotateY)
+
+      card.style.transform = `perspective(500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+    }
+
+    function cardBack(event) {
+      card.style.transform = `perspective(500px) rotateX(0deg) rotateY(0deg)`
+      cardTransition()
+    }
+
+    function cardTransition() {
+      clearInterval(card.transitionId)
+      card.style.transition = 'transform 400ms'
+      card.transitionId = setTimeout(() => {
+        card.style.transition = ''
+      }, 400)
+    }
+
+    function cardEnter(event) {
+      cardTransition()
+    }
+  </script>
+</html>
